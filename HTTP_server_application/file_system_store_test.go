@@ -26,7 +26,8 @@ func createTempFile(t testing.TB, initialData string) (*os.File, func()) {
 }
 
 func TestFileSystemStore(t *testing.T) {
-	t.Run("league sorted", func(t *testing.T) {
+
+	t.Run("League sorted", func(t *testing.T) {
 		database, cleanDatabase := createTempFile(t, `[
 			{"Name": "Cleo", "Wins": 10},
 			{"Name": "Chris", "Wins": 33}]`)
@@ -43,11 +44,11 @@ func TestFileSystemStore(t *testing.T) {
 			{"Cleo", 10},
 		}
 
-		AssertLeague(t, got, want)
+		assertLeague(t, got, want)
 
 		// read again
 		got = store.GetLeague()
-		AssertLeague(t, got, want)
+		assertLeague(t, got, want)
 	})
 
 	t.Run("get player score", func(t *testing.T) {
@@ -82,7 +83,7 @@ func TestFileSystemStore(t *testing.T) {
 		assertScoreEquals(t, got, want)
 	})
 
-	t.Run("store wins for new players", func(t *testing.T) {
+	t.Run("store wins for existing players", func(t *testing.T) {
 		database, cleanDatabase := createTempFile(t, `[
 			{"Name": "Cleo", "Wins": 10},
 			{"Name": "Chris", "Wins": 33}]`)
